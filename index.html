@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Eva's Tourist Trips — Private Italy Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --bg: #f8f4ef;
+        --text: #2f2a28;
+        --accent: #c4663a;
+        --muted: rgba(47, 42, 40, 0.65);
+        --card-bg: rgba(255, 255, 255, 0.8);
+        --shadow: 0 18px 30px rgba(47, 42, 40, 0.12);
+        --radius: 18px;
+        --max-width: 1100px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+        border-radius: var(--radius);
+      }
+
+      h1, h2, h3 {
+        font-family: "Playfair Display", serif;
+        color: var(--text);
+        margin: 0 0 0.5em;
+      }
+
+      h2 {
+        font-size: 2.25rem;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        margin: 0 0 1em;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      a:hover,
+      a:focus-visible {
+        text-decoration: underline;
+      }
+
+      button {
+        font-family: inherit;
+        cursor: pointer;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(12px);
+        background: rgba(248, 244, 239, 0.96);
+        box-shadow: none;
+        transition: box-shadow 0.3s ease, background 0.3s ease;
+      }
+
+      .site-header.is-scrolled {
+        box-shadow: 0 10px 30px rgba(47, 42, 40, 0.09);
+        background: rgba(248, 244, 239, 0.98);
+      }
+
+      .site-header .wrapper {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        padding: 1rem 1.25rem;
+      }
+
+      .brand {
+        font-family: "Playfair Display", serif;
+        font-size: 1.25rem;
+        letter-spacing: 0.05em;
+      }
+
+      nav {
+        display: none;
+        gap: 1rem;
+      }
+
+      nav a {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      .lang-toggle {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .lang-toggle button {
+        border: 1px solid rgba(47, 42, 40, 0.2);
+        background: transparent;
+        border-radius: 999px;
+        padding: 0.35rem 0.9rem;
+        font-weight: 500;
+        transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      }
+
+      .lang-toggle button.is-active {
+        background: var(--accent);
+        border-color: transparent;
+        color: #fff;
+      }
+
+      main {
+        display: block;
+      }
+
+      section {
+        padding: 4.5rem 1.25rem;
+      }
+
+      .wrapper {
+        max-width: var(--max-width);
+        margin: 0 auto;
+      }
+
+      .hero {
+        position: relative;
+        padding: 0;
+        color: #fff;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(14, 14, 14, 0.45) 0%, rgba(27, 20, 17, 0.55) 100%), url("https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=1500&q=80") center/cover no-repeat;
+        z-index: 0;
+      }
+
+      .hero .hero-inner {
+        position: relative;
+        z-index: 1;
+        min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 1.5rem;
+        padding: 6rem 1.25rem 5rem;
+        background: linear-gradient(180deg, rgba(20, 18, 16, 0.15) 0%, rgba(20, 18, 16, 0.55) 100%);
+      }
+
+      .hero h1 {
+        font-size: clamp(2.2rem, 6vw, 3.8rem);
+        color: #fff;
+      }
+
+      .hero p {
+        max-width: 35rem;
+        font-size: 1.05rem;
+      }
+
+      .cta-group {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        border: none;
+        border-radius: 999px;
+        padding: 0.85rem 1.9rem;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+
+      .btn:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: 3px;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+        box-shadow: 0 12px 25px rgba(196, 102, 58, 0.35);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 30px rgba(196, 102, 58, 0.35);
+      }
+
+      .section-intro {
+        max-width: 45rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .tours-grid {
+        display: grid;
+        gap: 1.75rem;
+      }
+
+      .tour-card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .tour-card:hover,
+      .tour-card:focus-within {
+        transform: translateY(-6px);
+        box-shadow: 0 25px 40px rgba(47, 42, 40, 0.18);
+      }
+
+      .tour-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        font-weight: 500;
+        color: var(--muted);
+      }
+
+      .tour-card .btn-outline {
+        align-self: flex-start;
+        border: 1px solid rgba(47, 42, 40, 0.2);
+        background: transparent;
+        color: var(--text);
+        padding: 0.7rem 1.4rem;
+      }
+
+      .tour-card .btn-outline:hover,
+      .tour-card .btn-outline:focus-visible {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .about-section {
+        display: grid;
+        gap: 2rem;
+      }
+
+      .about-photo-wrapper {
+        max-width: 18rem;
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .reviews-grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .review-card {
+        background: rgba(255, 255, 255, 0.85);
+        padding: 1.75rem;
+        border-radius: var(--radius);
+        box-shadow: 0 14px 36px rgba(47, 42, 40, 0.14);
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .stars {
+        color: var(--accent);
+        font-size: 1.1rem;
+        letter-spacing: 0.15em;
+      }
+
+      .contact-grid {
+        display: grid;
+        gap: 2.5rem;
+      }
+
+      form {
+        display: grid;
+        gap: 1.25rem;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 2rem;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+        font-weight: 500;
+        color: var(--text);
+      }
+
+      input,
+      textarea {
+        padding: 0.9rem 1rem;
+        border: 1px solid rgba(47, 42, 40, 0.25);
+        border-radius: 14px;
+        font-size: 1rem;
+        background: rgba(255, 255, 255, 0.95);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      input:focus-visible,
+      textarea:focus-visible {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 4px rgba(196, 102, 58, 0.18);
+        outline: none;
+      }
+
+      textarea {
+        min-height: 140px;
+        resize: vertical;
+      }
+
+      .consent {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        font-size: 0.95rem;
+      }
+
+      .consent input {
+        margin-top: 0.2rem;
+      }
+
+      .form-feedback {
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      .contact-info {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .contact-info h3 {
+        margin-bottom: 0.25rem;
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 22px;
+        right: 22px;
+        border: none;
+        border-radius: 50%;
+        width: 52px;
+        height: 52px;
+        background: rgba(47, 42, 40, 0.9);
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .back-to-top.is-visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      footer {
+        padding: 3rem 1.25rem 4rem;
+        text-align: center;
+        font-size: 0.95rem;
+        color: var(--muted);
+      }
+
+      section:target {
+        scroll-margin-top: 120px;
+      }
+
+      @media (min-width: 600px) {
+        nav {
+          display: flex;
+        }
+
+        .tours-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .reviews-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (min-width: 900px) {
+        .site-header .wrapper {
+          padding: 1rem 2.5rem;
+        }
+
+        section {
+          padding: 6rem 2rem;
+        }
+
+        .tours-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .reviews-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .about-section {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+          align-items: center;
+        }
+
+        .contact-grid {
+          grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+          align-items: start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrapper">
+        <div class="brand" data-i18n="brand">Eva's Tourist Trips</div>
+        <nav aria-label="Primary">
+          <a href="#home" data-i18n="nav.home">Home</a>
+          <a href="#tours" data-i18n="nav.tours">Tours</a>
+          <a href="#about" data-i18n="nav.about">About</a>
+          <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
+        </nav>
+        <div class="lang-toggle" role="group" aria-label="Language switcher">
+          <button type="button" class="is-active" data-lang="en">EN</button>
+          <button type="button" data-lang="it">IT</button>
+          <button type="button" data-lang="pl">PL</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="hero-inner wrapper">
+          <h1 data-i18n="hero.title">See Italy Like a Local</h1>
+          <p data-i18n="hero.subtitle">Tailored experiences crafted by Eva, your private guide through Italy's iconic cities and hidden gems.</p>
+          <div class="cta-group">
+            <a class="btn btn-primary" href="#contact" data-i18n="hero.cta">Plan a Tour</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="tours">
+        <div class="wrapper">
+          <div class="section-intro">
+            <h2 data-i18n="tours.heading">Signature Tours</h2>
+            <p data-i18n="tours.lead">Hand-picked itineraries that balance iconic highlights with insider-only discoveries.</p>
+          </div>
+          <div class="tours-grid">
+            <article class="tour-card">
+              <div>
+                <h3 data-i18n="tours.florence.title">Florence in a Day</h3>
+                <p data-i18n="tours.florence.blurb">Renaissance masterpieces and artisan districts in one unforgettable journey.</p>
+              </div>
+              <div class="tour-meta">
+                <span data-i18n="tours.florence.duration">6 hours</span>
+                <span data-i18n="tours.price">From €120 pp</span>
+              </div>
+              <button class="btn btn-outline" type="button" data-i18n="tours.button">Inquire</button>
+            </article>
+            <article class="tour-card">
+              <div>
+                <h3 data-i18n="tours.tuscany.title">Tuscany Wine Road</h3>
+                <p data-i18n="tours.tuscany.blurb">Sip world-class vintages and savor hilltop towns at a relaxed pace.</p>
+              </div>
+              <div class="tour-meta">
+                <span data-i18n="tours.tuscany.duration">8 hours</span>
+                <span data-i18n="tours.price">From €120 pp</span>
+              </div>
+              <button class="btn btn-outline" type="button" data-i18n="tours.button">Inquire</button>
+            </article>
+            <article class="tour-card">
+              <div>
+                <h3 data-i18n="tours.rome.title">Rome Express</h3>
+                <p data-i18n="tours.rome.blurb">Ancient landmarks and local trattoria secrets on a swift city immersion.</p>
+              </div>
+              <div class="tour-meta">
+                <span data-i18n="tours.rome.duration">6 hours</span>
+                <span data-i18n="tours.price">From €120 pp</span>
+              </div>
+              <button class="btn btn-outline" type="button" data-i18n="tours.button">Inquire</button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="about">
+        <div class="wrapper about-section">
+          <div class="about-photo-wrapper">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=700&q=80" alt="Portrait of Eva, your private Italy guide" loading="lazy">
+          </div>
+          <div>
+            <h2 data-i18n="about.heading">Meet Eva</h2>
+            <p data-i18n="about.p1">Eva is a certified private guide who has spent over a decade crafting bespoke journeys across Italy.</p>
+            <p data-i18n="about.p2">Raised between Florence and Rome, she curates stories that bring art, history, and daily life into vivid focus.</p>
+            <p data-i18n="about.p3">Fluent in English, Italian, and Polish, Eva connects with travelers from around the world.</p>
+            <p data-i18n="about.p4">Her tours blend celebrated landmarks with intimate encounters that feel like traveling with a local friend.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="reviews">
+        <div class="wrapper">
+          <div class="section-intro">
+            <h2 data-i18n="reviews.heading">Guests Say</h2>
+            <p data-i18n="reviews.lead">Stories from travelers who trusted Eva to reveal Italy’s soul.</p>
+          </div>
+          <div class="reviews-grid">
+            <figure class="review-card">
+              <div class="stars" role="img" aria-label="Rated 5 out of 5 stars" data-i18n-aria="reviews.sophia.aria">★★★★★</div>
+              <blockquote data-i18n="reviews.sophia.text">“Every detail was tailored to us. We met artisans I’d only read about and tasted the best gelato of my life.”</blockquote>
+              <figcaption data-i18n="reviews.sophia.name">Sophia L. — USA</figcaption>
+            </figure>
+            <figure class="review-card">
+              <div class="stars" role="img" aria-label="Rated 5 out of 5 stars" data-i18n-aria="reviews.matteo.aria">★★★★★</div>
+              <blockquote data-i18n="reviews.matteo.text">“Eva opened doors to wineries usually closed to tourists. Her knowledge and warmth made the day unforgettable.”</blockquote>
+              <figcaption data-i18n="reviews.matteo.name">Matteo &amp; Julia — Canada</figcaption>
+            </figure>
+            <figure class="review-card">
+              <div class="stars" role="img" aria-label="Rated 5 out of 5 stars" data-i18n-aria="reviews.ania.aria">★★★★★</div>
+              <blockquote data-i18n="reviews.ania.text">“From the moment we booked, Eva took care of everything. Rome felt personal, not crowded.”</blockquote>
+              <figcaption data-i18n="reviews.ania.name">Ania K. — Polska</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="wrapper contact-grid">
+          <form id="contact-form" novalidate>
+            <h2 data-i18n="contact.heading">Plan Your Journey</h2>
+            <p data-i18n="contact.lead">Tell Eva about your dream trip and receive a personalized proposal.</p>
+            <label>
+              <span data-i18n="contact.nameLabel">Name</span>
+              <input type="text" name="name" required placeholder="Your name" data-i18n-placeholder="contact.namePlaceholder">
+            </label>
+            <label>
+              <span data-i18n="contact.emailLabel">Email</span>
+              <input type="email" name="email" required placeholder="you@example.com" data-i18n-placeholder="contact.emailPlaceholder">
+            </label>
+            <label>
+              <span data-i18n="contact.dateLabel">Preferred Date</span>
+              <input type="date" name="date">
+            </label>
+            <label>
+              <span data-i18n="contact.messageLabel">Message</span>
+              <textarea name="message" placeholder="Share your ideas" data-i18n-placeholder="contact.messagePlaceholder"></textarea>
+            </label>
+            <label class="consent">
+              <input type="checkbox" name="consent" required>
+              <span data-i18n="contact.consent">I agree to the storage of my details for trip planning according to GDPR.</span>
+            </label>
+            <button class="btn btn-primary" type="submit" data-i18n="contact.submit">Send Request</button>
+            <div class="form-feedback" id="form-feedback" role="status" aria-live="polite" hidden>Thanks, we’ll reply soon.</div>
+          </form>
+          <div class="contact-info">
+            <h3 data-i18n="contact.directHeading">Prefer direct contact?</h3>
+            <p data-i18n="contact.directLead">Reach out through your favorite channel — Eva will respond within 24 hours.</p>
+            <p>
+              <strong>Email:</strong>
+              <a href="mailto:email@example.com">email@example.com</a>
+            </p>
+            <p>
+              <strong>WhatsApp:</strong>
+              <a href="https://wa.me/393000000000" target="_blank" rel="noreferrer">+39 3XX XXX XXXX</a>
+            </p>
+            <p>
+              <strong>Instagram:</strong>
+              <a href="https://instagram.com/yourhandle" target="_blank" rel="noreferrer">@yourhandle</a>
+            </p>
+            <p data-i18n="contact.address">Based in Florence, guiding across Italy.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <button type="button" class="back-to-top" aria-label="Back to top">↑</button>
+
+    <footer>
+      <div data-i18n="footer">© 2024 Eva's Tourist Trips. Crafted with care in Italy.</div>
+    </footer>
+
+    <script>
+      const texts = {
+        en: {
+          brand: "Eva's Tourist Trips",
+          nav: {
+            home: "Home",
+            tours: "Tours",
+            about: "About",
+            reviews: "Reviews",
+            contact: "Contact"
+          },
+          hero: {
+            title: "See Italy Like a Local",
+            subtitle: "Tailored experiences crafted by Eva, your private guide through Italy's iconic cities and hidden gems.",
+            cta: "Plan a Tour"
+          },
+          tours: {
+            heading: "Signature Tours",
+            lead: "Hand-picked itineraries that balance iconic highlights with insider-only discoveries.",
+            price: "From €120 pp",
+            button: "Inquire",
+            florence: {
+              title: "Florence in a Day",
+              blurb: "Renaissance masterpieces and artisan districts in one unforgettable journey.",
+              duration: "6 hours"
+            },
+            tuscany: {
+              title: "Tuscany Wine Road",
+              blurb: "Sip world-class vintages and savor hilltop towns at a relaxed pace.",
+              duration: "8 hours"
+            },
+            rome: {
+              title: "Rome Express",
+              blurb: "Ancient landmarks and local trattoria secrets on a swift city immersion.",
+              duration: "6 hours"
+            }
+          },
+          about: {
+            heading: "Meet Eva",
+            p1: "Eva is a certified private guide who has spent over a decade crafting bespoke journeys across Italy.",
+            p2: "Raised between Florence and Rome, she curates stories that bring art, history, and daily life into vivid focus.",
+            p3: "Fluent in English, Italian, and Polish, Eva connects with travelers from around the world.",
+            p4: "Her tours blend celebrated landmarks with intimate encounters that feel like traveling with a local friend."
+          },
+          reviews: {
+            heading: "Guests Say",
+            lead: "Stories from travelers who trusted Eva to reveal Italy’s soul.",
+            sophia: {
+              text: "“Every detail was tailored to us. We met artisans I’d only read about and tasted the best gelato of my life.”",
+              name: "Sophia L. — USA",
+              aria: "Rated 5 out of 5 stars"
+            },
+            matteo: {
+              text: "“Eva opened doors to wineries usually closed to tourists. Her knowledge and warmth made the day unforgettable.”",
+              name: "Matteo & Julia — Canada",
+              aria: "Rated 5 out of 5 stars"
+            },
+            ania: {
+              text: "“From the moment we booked, Eva took care of everything. Rome felt personal, not crowded.”",
+              name: "Ania K. — Polska",
+              aria: "Rated 5 out of 5 stars"
+            }
+          },
+          contact: {
+            heading: "Plan Your Journey",
+            lead: "Tell Eva about your dream trip and receive a personalized proposal.",
+            nameLabel: "Name",
+            namePlaceholder: "Your name",
+            emailLabel: "Email",
+            emailPlaceholder: "you@example.com",
+            dateLabel: "Preferred Date",
+            messageLabel: "Message",
+            messagePlaceholder: "Share your ideas",
+            consent: "I agree to the storage of my details for trip planning according to GDPR.",
+            submit: "Send Request",
+            directHeading: "Prefer direct contact?",
+            directLead: "Reach out through your favorite channel — Eva will respond within 24 hours.",
+            address: "Based in Florence, guiding across Italy.",
+            feedback: "Thanks, we’ll reply soon."
+          },
+          footer: "© {{year}} Eva's Tourist Trips. Crafted with care in Italy."
+        },
+        it: {
+          brand: "I viaggi di Eva",
+          nav: {
+            home: "Home",
+            tours: "Tour",
+            about: "Chi sono",
+            reviews: "Recensioni",
+            contact: "Contatti"
+          },
+          hero: {
+            title: "Vivi l'Italia da locale",
+            subtitle: "Esperienze su misura guidate da Eva, la tua guida privata tra le città iconiche d'Italia e i suoi tesori nascosti.",
+            cta: "Organizza un tour"
+          },
+          tours: {
+            heading: "Tour d'autore",
+            lead: "Itinerari selezionati che uniscono icone imperdibili e scoperte per pochi.",
+            price: "Da €120 a persona",
+            button: "Richiedi info",
+            florence: {
+              title: "Firenze in un giorno",
+              blurb: "Capolavori rinascimentali e botteghe artigiane in una giornata memorabile.",
+              duration: "6 ore"
+            },
+            tuscany: {
+              title: "Strada del Vino in Toscana",
+              blurb: "Degusta vini d'eccellenza e borghi collinari con ritmi rilassati.",
+              duration: "8 ore"
+            },
+            rome: {
+              title: "Roma Express",
+              blurb: "Monumenti antichi e segreti di trattorie locali in un'immersione rapida.",
+              duration: "6 ore"
+            }
+          },
+          about: {
+            heading: "Conosci Eva",
+            p1: "Eva è una guida privata certificata che da oltre dieci anni crea viaggi su misura in tutta Italia.",
+            p2: "Cresciuta tra Firenze e Roma, intreccia storie che rendono arte, storia e vita quotidiana vivide e coinvolgenti.",
+            p3: "Parla fluentemente inglese, italiano e polacco, mettendo a proprio agio viaggiatori da tutto il mondo.",
+            p4: "I suoi tour uniscono luoghi iconici a incontri autentici, come viaggiare con un'amica locale."
+          },
+          reviews: {
+            heading: "Le parole degli ospiti",
+            lead: "Racconti di viaggiatori che hanno affidato a Eva l'anima dell'Italia.",
+            sophia: {
+              text: "“Ogni dettaglio era su misura. Abbiamo incontrato artigiani unici e assaggiato il miglior gelato di sempre.”",
+              name: "Sophia L. — USA",
+              aria: "Valutazione 5 su 5 stelle"
+            },
+            matteo: {
+              text: "“Eva ci ha aperto cantine di solito chiuse ai turisti. Competenza e calore hanno reso la giornata indimenticabile.”",
+              name: "Matteo & Julia — Canada",
+              aria: "Valutazione 5 su 5 stelle"
+            },
+            ania: {
+              text: "“Dal momento della prenotazione Eva ha curato tutto. Roma è sembrata intima, mai affollata.”",
+              name: "Ania K. — Polska",
+              aria: "Valutazione 5 su 5 stelle"
+            }
+          },
+          contact: {
+            heading: "Pianifica il tuo viaggio",
+            lead: "Racconta a Eva il tuo sogno e ricevi una proposta personalizzata.",
+            nameLabel: "Nome",
+            namePlaceholder: "Il tuo nome",
+            emailLabel: "Email",
+            emailPlaceholder: "tu@example.com",
+            dateLabel: "Data preferita",
+            messageLabel: "Messaggio",
+            messagePlaceholder: "Racconta le tue idee",
+            consent: "Acconsento al trattamento dei miei dati per la pianificazione del viaggio secondo il GDPR.",
+            submit: "Invia richiesta",
+            directHeading: "Preferisci contattarla subito?",
+            directLead: "Scrivi sul canale che preferisci — Eva risponde entro 24 ore.",
+            address: "Con base a Firenze, accompagna in tutta Italia.",
+            feedback: "Grazie, ti risponderemo a breve."
+          },
+          footer: "© {{year}} I viaggi di Eva. Creato con cura in Italia."
+        },
+        pl: {
+          brand: "Włoskie podróże z Ewą",
+          nav: {
+            home: "Start",
+            tours: "Wycieczki",
+            about: "O mnie",
+            reviews: "Opinie",
+            contact: "Kontakt"
+          },
+          hero: {
+            title: "Poznaj Włochy jak miejscowy",
+            subtitle: "Indywidualne wyprawy prowadzone przez Ewę, Twojego prywatnego przewodnika po włoskich miastach i ukrytych perełkach.",
+            cta: "Zaplanuj wycieczkę"
+          },
+          tours: {
+            heading: "Wyjątkowe trasy",
+            lead: "Wyselekcjonowane programy łączące obowiązkowe atrakcje z lokalnymi odkryciami.",
+            price: "Od 120 € / os.",
+            button: "Zapytaj",
+            florence: {
+              title: "Florencja w jeden dzień",
+              blurb: "Renesansowe arcydzieła i rzemieślnicze dzielnice w jednym niezapomnianym dniu.",
+              duration: "6 godzin"
+            },
+            tuscany: {
+              title: "Toskański Szlak Win",
+              blurb: "Degustuj najlepsze wina i malownicze miasteczka w spokojnym tempie.",
+              duration: "8 godzin"
+            },
+            rome: {
+              title: "Rzymski ekspres",
+              blurb: "Starożytne zabytki i sekrety trattorii podczas ekspresowego zwiedzania miasta.",
+              duration: "6 godzin"
+            }
+          },
+          about: {
+            heading: "Poznaj Ewę",
+            p1: "Ewa to licencjonowana przewodniczka, która od ponad dekady tworzy szyte na miarę podróże po Włoszech.",
+            p2: "Wychowana między Florencją a Rzymem, opowiada historie ożywiające sztukę, historię i codzienność.",
+            p3: "Biegle mówi po angielsku, włosku i polsku, dzięki czemu buduje więź z podróżnikami z całego świata.",
+            p4: "Jej wycieczki łączą słynne miejsca z intymnymi spotkaniami, jak z przyjaciółką z Włoch."
+          },
+          reviews: {
+            heading: "Opinie gości",
+            lead: "Relacje podróżnych, którzy zaufali Ewie w odkrywaniu duszy Włoch.",
+            sophia: {
+              text: "„Każdy szczegół był dopasowany do nas. Poznaliśmy rzemieślników i spróbowaliśmy najlepszego gelato w życiu.”",
+              name: "Sophia L. — USA",
+              aria: "Ocena 5 na 5 gwiazdek"
+            },
+            matteo: {
+              text: "„Eva otworzyła przed nami winnice niedostępne dla turystów. Jej wiedza i serdeczność były bezcenne.”",
+              name: "Matteo i Julia — Kanada",
+              aria: "Ocena 5 na 5 gwiazdek"
+            },
+            ania: {
+              text: "„Od rezerwacji po ostatni dzień Eva o wszystko zadbała. Rzym stał się nasz, bez tłumów.”",
+              name: "Ania K. — Polska",
+              aria: "Ocena 5 na 5 gwiazdek"
+            }
+          },
+          contact: {
+            heading: "Zaplanuj podróż",
+            lead: "Opowiedz Ewie o swoich marzeniach, a otrzymasz propozycję dopasowaną do Ciebie.",
+            nameLabel: "Imię i nazwisko",
+            namePlaceholder: "Twoje imię",
+            emailLabel: "Email",
+            emailPlaceholder: "ty@example.com",
+            dateLabel: "Preferowana data",
+            messageLabel: "Wiadomość",
+            messagePlaceholder: "Podziel się pomysłami",
+            consent: "Wyrażam zgodę na przetwarzanie danych w celu planowania podróży zgodnie z RODO.",
+            submit: "Wyślij zapytanie",
+            directHeading: "Wolisz kontakt bezpośredni?",
+            directLead: "Wybierz ulubiony kanał — Ewa odpowie w ciągu 24 godzin.",
+            address: "Siedziba we Florencji, wycieczki w całych Włoszech.",
+            feedback: "Dziękujemy, odezwiemy się wkrótce."
+          },
+          footer: "© {{year}} Włoskie podróże z Ewą. Stworzone z sercem we Włoszech."
+        }
+      };
+
+      const applyTranslations = (lang) => {
+        const dictionary = texts[lang] || texts.en;
+        document.documentElement.lang = lang;
+
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const path = el.dataset.i18n;
+          const value = path.split(".").reduce((acc, key) => (acc ? acc[key] : undefined), dictionary);
+            if (typeof value === "string") {
+              el.textContent = path === "footer" ? value.replace("{{year}}", new Date().getFullYear()) : value;
+          }
+        });
+
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+          const path = el.dataset.i18nPlaceholder;
+          const value = path.split(".").reduce((acc, key) => (acc ? acc[key] : undefined), dictionary);
+          if (typeof value === "string") {
+            el.setAttribute("placeholder", value);
+          }
+        });
+
+        document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+          const path = el.dataset.i18nAria;
+          const value = path.split(".").reduce((acc, key) => (acc ? acc[key] : undefined), dictionary);
+          if (typeof value === "string") {
+            el.setAttribute("aria-label", value);
+          }
+        });
+
+        const feedback = dictionary?.contact?.feedback;
+        if (feedback) {
+          const feedbackEl = document.getElementById("form-feedback");
+          feedbackEl.textContent = feedback;
+        }
+      };
+
+      const langButtons = document.querySelectorAll(".lang-toggle button");
+      let currentLang = "en";
+      applyTranslations(currentLang);
+
+      langButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const lang = button.dataset.lang;
+          if (!texts[lang] || lang === currentLang) return;
+          currentLang = lang;
+          langButtons.forEach((btn) => btn.classList.toggle("is-active", btn.dataset.lang === lang));
+          applyTranslations(lang);
+        });
+      });
+
+      const header = document.querySelector(".site-header");
+      const backToTop = document.querySelector(".back-to-top");
+
+      const handleScroll = () => {
+        const scrolled = window.scrollY > 16;
+        header.classList.toggle("is-scrolled", scrolled);
+        if (window.scrollY > 420) {
+          backToTop.classList.add("is-visible");
+        } else {
+          backToTop.classList.remove("is-visible");
+        }
+      };
+
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      handleScroll();
+
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      const form = document.getElementById("contact-form");
+      const feedbackEl = document.getElementById("form-feedback");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const requiredFields = form.querySelectorAll("[required]");
+        for (const field of requiredFields) {
+          if (field.type === "checkbox" && !field.checked) {
+            field.focus();
+            return;
+          }
+          if (field.type !== "checkbox" && !field.value.trim()) {
+            field.focus();
+            return;
+          }
+        }
+        form.reset();
+        feedbackEl.hidden = false;
+        feedbackEl.textContent = texts[currentLang].contact.feedback;
+      });
+    </script>
+  </body>
+</html>
